@@ -7,7 +7,11 @@ def get_top_customers():
 
     cursor.execute(f"USE test17")
 
-    query = """select * from customers"""
+    query = """SELECT *  FROM customers 
+                right join (select customerNumber from orders group by customerNumber order by count(customerNumber) desc limit 10) new
+                on new.customerNumber = customers.customerNumber"""
+
+   
 
     cursor.execute(query)
 
