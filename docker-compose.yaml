@@ -39,7 +39,65 @@ services:
     volumes:
       - mongo_data:/data/db
 
+    mysql:
+      image: mysql:8.0
+      container_name: mysql
+      restart: always
+      environment:
+        MYSQL_ROOT_PASSWORD: "rootpass"
+      ports:
+        - "3306:3306"
+      volumes:
+        - mysql_data:/var/lib/mysql
 
+  producer:
+    build: ./producer
+    container_name: producer
+    depends_on:
+      kafka:
+        condition: service_healthy
+      mongo:
+        condition: service_started
+    environment:
+      TOPIC: "OrCu"
+      BOOTSTRAP_SERVERS: "kafka:9092"
+      MONGO_HOST: "mongodb://mongo"
+      MONGO_PORT: 27017
+
+
+  consumer:
+    build: ./consumer
+    container_name: consumer
+    depends_on:
+      mysql:
+        condition: service_started
+      kafka:
+        condition: service_healthy
+    environment:
+      TOPIC: "OrCu"
+      BOOTSTRAP_SERVERS: "kafka:9092"
+      SQL_HOST: "mysql"
+      SQL_USER: "root"
+      PASSWORD: "rootpass"
+  
+  api:
+    build: ./analystic-api
+    container_name: analystic-api
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_started
+    environment:
+      SQL_HOST: "mysql"
+      SQL_USER: "root"
+      PASSWORD: "rootpass"
+
+
+
+
+  
 volumes:
   kafka_kraft:
   mongo_data:
+  mysql_data:

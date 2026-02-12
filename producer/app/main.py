@@ -7,6 +7,7 @@ from time import sleep
 topic = os.getenv("TOPIC","OrCu")
 
 def main():
+    sleep(20)
     jump = 0
     batch_size=30
     collection = get_collectin()

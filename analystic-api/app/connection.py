@@ -12,7 +12,7 @@ def get_conn_cursor():
                 user=user,
                 password=password
             )
-        cursor = conn.cursor()
+        cursor = conn.cursor(dictionary=True)
 
         return (conn , cursor)
     except Exception as e:

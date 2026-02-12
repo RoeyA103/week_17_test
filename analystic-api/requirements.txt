@@ -1,0 +1,4 @@
+confluent-kafka==2.13.0
+kafka-python==2.3.0
+mysql-connector-python==9.5.0
+uvicorn==0.38.0
