@@ -27,6 +27,7 @@ def consumer_listener(consumer):
         while True:
             msg = consumer.poll(1.0)
             if msg is None:
+                print("no data")
                 continue
             if msg.error():
                 print("❌ Error:", msg.error())
@@ -35,6 +36,8 @@ def consumer_listener(consumer):
             value = msg.value().decode("utf-8")
 
             data = json.loads(value)
+
+            print(data)
 
             inser_data(data=data)
 

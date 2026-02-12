@@ -1,5 +1,7 @@
 CREATE DATABASE IF NOT EXISTS test17;
 
+USE test17;
+
 CREATE TABLE IF NOT EXISTS orders (
         orderNumber int,
         orderDate varchar(50),
