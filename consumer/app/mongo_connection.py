@@ -12,6 +12,9 @@ def get_collectin():
 
         collection = db.customers_orders
 
+
+        print("connect to mongo successfuly")
+
         return collection
     except errors.PyMongoError as e:
         raise e
